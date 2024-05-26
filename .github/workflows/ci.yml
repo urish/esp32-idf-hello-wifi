@@ -7,6 +7,8 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    env:
+      WOKWI_CLI_SERVER: ws://localhost:9177
     steps:
       - uses: actions/checkout@v3
       - name: esp-idf build
@@ -15,6 +17,9 @@ jobs:
           esp_idf_version: v4.4
           target: esp32
           path: '.'
+      - name: Wokwi CI Server
+        run:
+          docker run -d -p 9177:3000 --name wokwi-ci-server me-west1-docker.pkg.dev/wokwi-app/wokwi-ci/ci
       - name: Test with Wokwi
         uses: wokwi/wokwi-ci-action@v1
         with:
