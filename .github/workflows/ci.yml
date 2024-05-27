@@ -22,3 +22,7 @@ jobs:
         with:
           token: ${{ secrets.WOKWI_CLI_TOKEN }}
           expect_text: 'any webserver online'
+      - name: CI Server Logs
+        if: always()
+        run: |
+          docker logs -t $(docker ps -q)
